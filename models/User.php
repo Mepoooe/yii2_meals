@@ -11,7 +11,6 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
     {
         return 'user';
     }
-    // не пойму почему эти переменные пустые
 
     //добавление пользователя
     public function addUser($validPost)
@@ -94,8 +93,6 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
         return \Yii::$app->security->validatePassword($password, $this->password);
     }
 
-    //helper для auth_key
-    // почитать для чего используеться
     public function generateAuthKey()
     {
         $this->auth_key = \Yii::$app->security->generateRandomString();
@@ -119,8 +116,6 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
         $user->save();
     
     return $user;
-    
-    return $meal;
     }
 
      public function delUser ($id)

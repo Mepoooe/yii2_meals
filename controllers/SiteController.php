@@ -60,10 +60,10 @@ class SiteController extends Controller
      *
      * @return string
      */
+    // Вывод главной страницы 
     public function actionIndex()
     {
-        $user = User::find()->all();
-        return $this->render('index', compact('user'));
+        return $this->render('index');
     }
 
     // action for reg
@@ -76,9 +76,9 @@ class SiteController extends Controller
         $model = new RegForm(); 
 
         if ($model->load(Yii::$app->request->post())) {
-            // if(!$model->validate()){
-            //      print_r($model->errors);
-            // } 
+            if(!$model->validate()){
+                 print_r($model->errors);
+            } 
             if ($model->validate()) {
                 $valueArray = array();
                 $post = Yii::$app->request->post();

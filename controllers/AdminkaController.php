@@ -12,10 +12,10 @@ class AdminkaController extends AppController {
 
 	public function actionIndex() 
 	{	
-		$hello = ' hello';
-        return $this->render('index', compact('hello'));    
+        return $this->render('index');    
     }
 
+    // Вывод обедов в Админке, добавление новых обедов
 	public function actionMeals() {
 		$model = new AddMealsForm();
 
@@ -39,6 +39,7 @@ class AdminkaController extends AppController {
 		return $this->render('meals', compact('meals', 'model'));
 	}
 
+    // удаление обедов
 	public function actionDel ($id = null)
 	{
 		$model = new AddMealsForm();
@@ -48,6 +49,7 @@ class AdminkaController extends AppController {
         return $this->redirect(['meals']);
 	}
 
+    //редактирование информации про обеды
 	public function actionEditMeal ($id = null)
 	{
 		$model = new AddMealsForm();
@@ -73,6 +75,7 @@ class AdminkaController extends AppController {
     	return $this->render('editMeal', compact('meal', 'model'));
 	}
 
+    // вывод пользователей
 	public function actionUsers() {
 		$model = new AddUsersForm();
 
@@ -97,12 +100,14 @@ class AdminkaController extends AppController {
 		return $this->render('users', compact('users', 'post', 'model'));
 	}
 
+    // подробнее про пользователя и его заказах
 	public function actionUser($id) {
 		$user = User::findIdentity($id);
 		$orderList = OrderList::find()->where(['id_user' => $id])->with('meals')->all();
 		return $this->render('user', compact('user', 'orderList'));
 	}
 
+    // редактировать информацию про пользователя
 	public function actionEditUser ($id = null)
 	{
 		$model = new AddUsersForm();
@@ -129,6 +134,7 @@ class AdminkaController extends AppController {
 
 	}
 
+    // удалить Пользователя
 	public function actionDelUser ($id = null)
 	{
 		$model = new AddUsersForm();

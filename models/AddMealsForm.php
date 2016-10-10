@@ -31,9 +31,6 @@ class AddMealsForm extends Model
             'title' => [['title'], 'string', 'max' => 60],
             'category' => [['category'], 'string', 'max' => 60],
             'body' => [['body'], 'string'],
-             // ['username', 'unique', 'message' => 'Please choose a username.'],
-
-            // username is validated by validatePassword()
         ]; 
     }
 

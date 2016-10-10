@@ -42,7 +42,6 @@ class Search extends Model {
 
     public function findById ($tableName, $id, $id_user)
     {	
-    	//return OrderList::find()->all();
     	if ($tableName === 'OrderList') {
     		return OrderList::find()->where(['id_meals' => $id, 'id_user' => $id_user])->one();
     	} else {

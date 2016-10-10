@@ -41,7 +41,6 @@ class RegForm extends Model
              ['phone', 'number'],
              ['captcha', 'required'],
              ['captcha', 'captcha'],
-             // ['username', 'unique', 'message' => 'Please choose a username.'],
 
             // username is validated by validatePassword()
             ['username', 'validateUsername'],

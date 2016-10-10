@@ -7,12 +7,9 @@ use app\models\OrderList;
 use app\models\User;
 use app\models\FilterMealsForm;
 use Yii;
-//use yii\web\User;
 
 class MealsController extends AppController {
-	// шаблон для текущего контроллера
-	// public $layout = 'misha';
-
+	// добавление и вывод обедов
 	public function actionIndex() {
 		$model = new FilterMealsForm();
 
@@ -27,17 +24,11 @@ class MealsController extends AppController {
                 foreach ($post['FilterMealsForm'] as $key => $value) {
                 	$valueArray[$key] = $value; 
                 }
-                // $name = $post['FilterMealsForm']['nameMeal'];
-                // $category = $post['FilterMealsForm']['category'];
-                // $timeAdd = $post['FilterMealsForm']['timeAdd'];
-
-                //1-название модели в кот поиск, 2 - что ищем
                 $search = new Search();
                 if (is_array($valueArray)) {
                 	$findMealsByName = $search->findOne('Meals', $valueArray);
                 }
                 
-                //$userCreate = $user->addUser($model);
                 return $this->render('search', compact('findMealsByName'));;
             }
         }
@@ -48,19 +39,13 @@ class MealsController extends AppController {
 
         return $this->render('index', compact('posts', 'pages', 'model'));
 	}
-
+	// просмотр подробной информации про Обед
 	public function actionMeal($id = null) {
-		// передача get запросом
-		// 	$id = \Yii::$app->request->get('id');
-		// 	$post = Post::findOne($id);
-		// if (empty($post)) {
-		// 	throw new \yii\web\HttpException(404, 'Такой страницы нет');
-		// }
 		$post = Meals::findOne($id);
 
 		return $this->render('meal', compact('post'));
 	}
-
+	//фильтр по обедам
 	public function actionSearch($category = null)
 	{
 		$searchValue['category'] = $category;
@@ -95,6 +80,7 @@ class MealsController extends AppController {
 		return $this->redirect(['index']);
 	}
 
+	// удалить обед
 	public function actionDelMeals ($id = null)
 	{
 		if ($id !== null) {
@@ -106,6 +92,8 @@ class MealsController extends AppController {
 		$orderList = OrderList::find()->with('meals')->all();
 		return $this->render('yourMenu', compact('orderList'));
 	}
+
+	//вывод меню для конкрутного пользователя
 	public function actionYourMenu()
 	{
 		$id = Yii::$app->user->identity->id;
