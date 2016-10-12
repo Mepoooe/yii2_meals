@@ -20,7 +20,7 @@ class RegForm extends Model
     public $email;
     public $phone;
     public $address;
-    public $captcha;
+    //public $captcha;
  
     private $_user = true;
 
@@ -39,8 +39,7 @@ class RegForm extends Model
              ['username', 'string', 'length' => [4, 24]],
              ['address', 'string', 'length' => [4, 24]],
              ['phone', 'number'],
-             ['captcha', 'required'],
-             ['captcha', 'captcha'],
+              //[[], \himiklab\yii2\recaptcha\ReCaptchaValidator::className()],
 
             // username is validated by validatePassword()
             ['username', 'validateUsername'],
@@ -79,31 +78,14 @@ class RegForm extends Model
         }
     }
 
-    // /**
-    //  * Logs in a user using the provided username and password.
-    //  * @return boolean whether the user is logged in successfully
-    //  */
-    // public function login()
-    // {
-    //     if ($this->validate()) {
-    //         return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600*24*30 : 0);
-    //     }
-    //     return false;
-    // }
-
-    // /**
-    //  * Finds user by [[username]]
-    //  *
-    //  * @return User|null 
-    //  */
     public function getUser()
     {
-        if ($this->_user === true) {
+        
             $this->_user = User::findByUsername($this->username);
             if ($this->_user === NULL) {
                return $this->_user = false;
             }
-        }
+        
 
         return $this->_user = true;
     }

@@ -1,0 +1,5 @@
+RewriteEngine on 
+RewriteBase / 
+RewriteCond %{HTTP_HOST} ^nikula-m\.ru\.web$ 
+RewriteCond %{REQUEST_URI} !/nikula-m\.ru/ 
+RewriteRule ^(.*)$ /forum/$1 [L]

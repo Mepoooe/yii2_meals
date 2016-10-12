@@ -43,9 +43,9 @@ foreach ($meals as $meal) {
 
 	        <?= $form->field($model, 'title')->textInput(['autofocus' => true]) ?>
 	        <?= $form->field($model, 'category')->dropDownList([
-	        	'firstMeals' => 'первые блюда',
-	        	'secondMeals' => 'вторые блюда',
-	        	'another' => 'прочие блюда',
+	        	'Жаркое' => 'Жаркое',
+	        	'Супы' => 'Супы',
+	        	'Десерты' => 'Десерты',
 
 	        ], [
 	        'prompt' => 'Выберите один или несколько вариантов'

@@ -2,8 +2,6 @@
 use yii\widgets\ActiveForm;
 use yii\helpers\Html;
 use yii\captcha\Captcha;
-
-printGreat($user);
 ?>
 
 <h1>hello</h1>

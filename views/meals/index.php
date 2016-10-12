@@ -12,9 +12,9 @@ use yii\helpers\Html;
 
 	        <?= $form->field($model, 'nameMeal')->textInput(['autofocus' => true]) ?>
 	        <?= $form->field($model, 'category')->dropDownList([
-	        	'firstMeals' => 'первые блюда',
-	        	'secondMeals' => 'вторые блюда',
-	        	'прочее' => 'прочие блюда',
+	        	'Жаркое' => 'Жаркое',
+	        	'Супы' => 'Супы',
+	        	'Десерты' => 'Десерты',
 
 	        ], [
 	        'prompt' => 'Выберите один или несколько вариантов'
@@ -39,7 +39,7 @@ use yii\helpers\Html;
 <?
 foreach ($posts as $post) {
 ?>
-			<div class="col-6 col-sm-6 col-lg-4">
+			<div class="col-6 col-sm-6 col-lg-6 ">
               <h2><a href="<? echo yii\helpers\Url::to(['meals/meal', 'id' => $post->id]); ?>"> <?=$post->title ?></a></h2>
               <p>Дата добавления: <?=$post->publish_date ?></p>
               <p><a href="<? echo yii\helpers\Url::to(['meals/search', 'category' => $post->category]); ?>"> <?=$post->category ?></a> </p>

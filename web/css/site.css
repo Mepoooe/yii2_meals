@@ -93,3 +93,14 @@ a.desc:after {
 .formAdminkaAddMeals {
     padding: 15px;
 }
+
+.sizeMeals {
+   text-overflow: ellipsis; 
+  overflow: hidden; 
+  width: 100%; 
+  white-space: nowrap;
+}
+
+.sizeMeals:hover {
+    white-space: normal; /* Обычный перенос текста */
+}

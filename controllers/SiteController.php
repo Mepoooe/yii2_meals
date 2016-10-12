@@ -47,11 +47,7 @@ class SiteController extends Controller
         return [
             'error' => [
                 'class' => 'yii\web\ErrorAction',
-            ],
-            'captcha' => [
-                'class' => 'yii\captcha\CaptchaAction',
-                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
-            ],
+            ]
         ];
     }
 
@@ -90,7 +86,6 @@ class SiteController extends Controller
                 return $this->render('index', compact('userCreate'));;
             }
         }
-
         return $this->render('reg', [
             'model' => $model,
         ]);

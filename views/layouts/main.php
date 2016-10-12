@@ -40,7 +40,12 @@ AppAsset::register($this);
             ['label' => 'Home', 'url' => ['/site/index']],
             ['label' => 'Каталог блюд', 'url' => ['/meals/index']],
             ['label' => 'About', 'url' => ['/site/about']],
-            ['label' => 'Registration', 'url' => ['/site/reg']],
+            Yii::$app->user->isGuest ? (
+            ['label' => 'Registration', 'url' => ['/site/reg']]
+            ) : (
+                '<li>'
+                .'</li>'
+            ),
             ['label' => 'Contact', 'url' => ['/site/contact']],
 
             Yii::$app->user->isGuest ? (
@@ -55,7 +60,13 @@ AppAsset::register($this);
                 . Html::endForm()
                 . '</li>'
             ),
-            ['label' => 'Ваше меню', 'url' => ['/meals/your-menu']],
+            Yii::$app->user->isGuest ? (
+                '<li>'
+                .'</li>'
+            ) : (
+                ['label' => 'Ваше меню', 'url' => ['/meals/your-menu']]
+            ),
+            
         ],
     ]);
     NavBar::end();

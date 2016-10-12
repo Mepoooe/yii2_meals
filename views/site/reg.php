@@ -33,7 +33,10 @@ use yii\captcha\Captcha;
 
         <?= $form->field($model, 'address')->textInput() ?>
 
-         <?= $form->field($model, 'captcha')->widget(Captcha::className()) ?>
+        <?//= $form->field($model, 'reCaptcha')->widget(
+        //    \himiklab\yii2\recaptcha\ReCaptcha::className(),
+        //    ['siteKey' => '6LejABgTAAAAAKj_HiKJUf8lO8g_2Exs6Yh6jk_E']
+        //) ?>
 
         <input type="hidden" value="<?=Yii::$app->request->getCsrfToken()?>" />
 

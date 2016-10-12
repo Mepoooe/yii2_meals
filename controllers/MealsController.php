@@ -34,7 +34,7 @@ class MealsController extends AppController {
         }
 
 		$query = Meals::find()->select('id, title, category, body, publish_date')->orderBy('id DESC');
-		$pages = new \yii\data\Pagination(['totalCount' => $query->count(), 'pageSize' => 8, 'pageSizeParam' => false, 'forcePageParam' => false]);
+		$pages = new \yii\data\Pagination(['totalCount' => $query->count(), 'pageSize' => 6, 'pageSizeParam' => false, 'forcePageParam' => false]);
 		$posts = $query->offset($pages->offset)->limit($pages->limit)->all();
 
         return $this->render('index', compact('posts', 'pages', 'model'));
@@ -64,7 +64,7 @@ class MealsController extends AppController {
 		$id = $id;
 		$userId = $userId;
 		if($userId === null) {
-			return $this->redirect('http://happyfood/site/login');
+			return $this->redirect(array('site/login/'));
 		}
 
 		$searchMealsById = new Search();

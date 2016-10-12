@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "479407875c975e7dbee0aefcb85e62d5",
-    "content-hash": "5c27dd23827e5c153817a7f3f5d227c6",
+    "hash": "b4b9ea029115ea6951ad0b1d7a5d1196",
+    "content-hash": "35f51530a3cd20a6e6dbe51af3dad8c1",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -298,6 +298,103 @@
                 "html"
             ],
             "time": "2016-07-16 12:58:58"
+        },
+        {
+            "name": "himiklab/yii2-recaptcha-widget",
+            "version": "1.0.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/himiklab/yii2-recaptcha-widget.git",
+                "reference": "0e13a167b408f979b2c5ea5ceb444d169902570c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/himiklab/yii2-recaptcha-widget/zipball/0e13a167b408f979b2c5ea5ceb444d169902570c",
+                "reference": "0e13a167b408f979b2c5ea5ceb444d169902570c",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2": "*"
+            },
+            "require-dev": {
+                "phpunit/dbunit": ">=1.2",
+                "phpunit/phpunit": ">=3.7",
+                "phpunit/phpunit-selenium": ">=1.2"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "himiklab\\yii2\\recaptcha\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "HimikLab",
+                    "homepage": "https://github.com/himiklab/"
+                }
+            ],
+            "description": "Yii2 Google reCAPTCHA widget",
+            "keywords": [
+                "captcha",
+                "google",
+                "recaptcha",
+                "widget",
+                "yii2"
+            ],
+            "time": "2016-06-10 15:38:28"
+        },
+        {
+            "name": "jumper423/yii2-captcha",
+            "version": "1.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jumper423/yii2-captcha.git",
+                "reference": "b04bdd2fc5fdbbdbd8d4df365c150fa4a56c6f04"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jumper423/yii2-captcha/zipball/b04bdd2fc5fdbbdbd8d4df365c150fa4a56c6f04",
+                "reference": "b04bdd2fc5fdbbdbd8d4df365c150fa4a56c6f04",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0",
+                "yiisoft/yii2": "*"
+            },
+            "type": "project",
+            "autoload": {
+                "psr-4": {
+                    "jumper423\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache License 2.0"
+            ],
+            "description": "Распознавание капч для всех популярных сервисов rucaptcha.com, 2captcha.com, pixodrom.com, captcha24.com, socialink.ru, anti-captcha.com",
+            "homepage": "http://infoblog1.ru/learn/cms/yii/raspoznavanie-kapch-na-yii2",
+            "keywords": [
+                "2captcha",
+                "2captcha.com",
+                "anti-captcha",
+                "anti-captcha.com",
+                "captcha",
+                "captcha24",
+                "captcha24.com",
+                "pixodrom",
+                "pixodrom.com",
+                "recognition",
+                "rucaptcha",
+                "rucaptcha.com",
+                "socialink",
+                "socialink.ru",
+                "yii2"
+            ],
+            "time": "2016-03-06 22:11:06"
         },
         {
             "name": "swiftmailer/swiftmailer",

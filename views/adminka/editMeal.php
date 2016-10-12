@@ -3,20 +3,20 @@ use yii\widgets\ActiveForm;
 use yii\helpers\Html;
 
 printGreat($meal->title);
-switch ($meal->category) {
-	case 'firstMeals':
-		$meal->category = 'первые блюда';
-		break;
-	case 'secondMeals':
-		$meal->category = 'вторые блюда';
-		break;
-	case 'another':
-		$meal->category = 'прочие блюда';
-		break;
+// switch ($meal->category) {
+// 	case 'firstMeals':
+// 		$meal->category = 'первые блюда';
+// 		break;
+// 	case 'secondMeals':
+// 		$meal->category = 'вторые блюда';
+// 		break;
+// 	case 'another':
+// 		$meal->category = 'прочие блюда';
+// 		break;
 	
-	default:
-		break;
-}
+// 	default:
+// 		break;
+// }
 ?>
 
 <h1>hello</h1>
@@ -27,9 +27,9 @@ switch ($meal->category) {
 
 	        <?= $form->field($model, 'title')->textInput(['autofocus' => true, 'value' => $meal->title]) ?>
 	        <?= $form->field($model, 'category')->dropDownList([
-	        	'firstMeals' => 'первые блюда',
-	        	'secondMeals' => 'вторые блюда',
-	        	'another' => 'прочие блюда',
+	        	'Жаркое' => 'Жаркое',
+	        	'Супы' => 'Супы',
+	        	'Десерты' => 'Десерты',
 
 	        ], [
 	        'prompt' => $meal->category
