@@ -18,6 +18,7 @@ class LoginForm extends Model
     public $rememberMe = true;
 
     private $_user = false;
+    private $_mail = false;
 
 
     /**
@@ -54,10 +55,15 @@ class LoginForm extends Model
     {
         if (!$this->hasErrors()) {
             $user = $this->getUser();
+            // $mail = $this->getUserMail();
 
             if (!$user || !$user->validatePassword($this->password)) {
                 $this->addError($attribute, 'Не верный логин или пароль.');
             }
+
+            // if (!$mail || !$user->validatePassword($this->password)) {
+            //     $this->addError($attribute, 'Не верный mail или пароль.');
+            // }
         }
     }
 
@@ -88,8 +94,20 @@ class LoginForm extends Model
     {
         if ($this->_user === false) {
             $this->_user = User::findByUsername($this->username);
+            if (!$this->_user) {
+                $this->_user = User::findByUserMail($this->username);
+            }
         }
 
         return $this->_user;
+    }
+
+    public function getUserMail()
+    {
+        if ($this->_mail === false) {
+            $this->_mail = User::findByUserMail($this->username);
+        }
+
+        return $this->_mail;
     }
 }
