@@ -71,7 +71,7 @@ foreach ($posts as $post) {
 	</div>
 <?echo \yii\widgets\LinkPager::widget(['pagination' => $pages]);?>
 <?php
-echo $idUser = Yii::$app->user->id;
+$idUser = Yii::$app->user->id;
 if ($idUser === null) {
 	$idUser = 'false';
 }

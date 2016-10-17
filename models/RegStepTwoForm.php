@@ -15,14 +15,8 @@ use yii\db\ActiveRecord;
  */
 class RegStepTwoForm extends Model
 {
-    // public $username;
-    // public $password;
-    // public $email;
      public $phone;
      public $address;
-    //public $captcha;
- 
-
 
     /**
      * @return array the validation rules.

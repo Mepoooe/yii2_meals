@@ -15,13 +15,8 @@ use yii\db\ActiveRecord;
  */
 class RegStepThreeForm extends Model
 {
-    // public $username;
-    // public $password;
-    // public $email;
-     public $confirm;
-    //public $captcha;
- 
 
+     public $confirm;
 
     /**
      * @return array the validation rules.

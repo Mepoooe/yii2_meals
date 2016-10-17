@@ -18,9 +18,7 @@ class RegStepOneForm extends Model
     public $username;
     public $password;
     public $email;
-    // public $phone;
-    // public $address;
-    //public $captcha;
+    public $captcha;
  
     private $_user = true;
 
@@ -37,11 +35,7 @@ class RegStepOneForm extends Model
              ['email', 'email'],
              'password' => [['password'], 'string', 'min' => 4, 'max' => 60],
              ['username', 'string', 'length' => [4, 24]],
-             // ['address', 'string', 'length' => [4, 24]],
-             // ['phone', 'number'],
-              //[[], \himiklab\yii2\recaptcha\ReCaptchaValidator::className()],
-
-            // username is validated by validatePassword()
+              [[], \himiklab\yii2\recaptcha\ReCaptchaValidator::className()],
             ['username', 'validateUsername'],
             ['email', 'validateEmail'],
         ]; 

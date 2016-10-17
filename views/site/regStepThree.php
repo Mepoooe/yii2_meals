@@ -21,12 +21,9 @@ use yii\captcha\Captcha;
         $stepOneValue = $session->get('stepOneValue');
         $stepTwoValue = $session->get('stepTwoValue');
         $session->close();
-
-        printGreat($result['phone']);
-
     ?>
     <h2>Спасибо за терпение <?= $stepOneValue['username']?> :</h2>
-    <h3>Проверте информацию о себе:</h3>
+    <h3>Проверьте информацию о себе:</h3>
     <p>Ваш mail: <?= $stepOneValue['email']?>  </p>
     <p>Ваш телефон: <?= $stepTwoValue['phone']?></p>
     <p>Ваш адресс: <?= $stepTwoValue['address']?> </p>

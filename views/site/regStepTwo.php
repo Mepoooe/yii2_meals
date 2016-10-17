@@ -34,27 +34,15 @@ use yii\captcha\Captcha;
             'labelOptions' => ['class' => 'col-lg-1 control-label'],
         ],
     ]); ?>
-
-        <?//= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
-
-        <?//= $form->field($model, 'email')->textInput() ?>
-
-        <?//= $form->field($model, 'password')->passwordInput() ?>
-
         <?= $form->field($model, 'phone')->textInput() ?>
 
         <?= $form->field($model, 'address')->textInput() ?>
-
-        <!-- <?= $form->field($model, 'reCaptcha')->widget(
-            \himiklab\yii2\recaptcha\ReCaptcha::className(),
-            ['siteKey' => '6LejABgTAAAAAKj_HiKJUf8lO8g_2Exs6Yh6jk_E']
-        ) ?> -->
 
         <input type="hidden" value="<?=Yii::$app->request->getCsrfToken()?>" />
 
         <div class="form-group">
             <div class="col-lg-offset-1 col-lg-11">
-                <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
+                <?= Html::submitButton('Далее', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
             </div>
         </div>
 
