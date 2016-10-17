@@ -6,6 +6,8 @@ use yii\db\ActiveRecord;
 
 class User extends ActiveRecord implements \yii\web\IdentityInterface
 {
+    const ROLE_ADMIN = 20;
+    const ROLE_USER = 0;
 
     public static function tableName()
     {
@@ -14,13 +16,13 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
 
     //добавление пользователя
     public function addUser($validPost)
-    {
+    {   
         $user = new User();
         $user->username = $validPost['username'];
         $user->password = \Yii::$app->getSecurity()->generatePasswordHash($validPost['password']);
         $user->email = $validPost['email'];
-        $user->phone = $validPost['phone'];
         $user->address = $validPost['address'];
+        $user->phone = $validPost['phone'];
         $user->save();
     
     return $user;
@@ -127,5 +129,26 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
     {
         $user = User::findOne($id);
         $user->delete();
+    }
+
+    //Используя метод findOne ищем запись с соответствующим именем и ролью Администратора. Если запись не будет найдена, возвращаем false.
+    public static function isUserAdmin($username)
+    {
+        if (static::findOne(['username' => $username, 'salt' => self::ROLE_ADMIN]))
+        {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static function isUser($username)
+    {
+        if (static::findOne(['username' => $username, 'salt' => self::ROLE_USER]))
+        {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

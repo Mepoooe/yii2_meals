@@ -4,6 +4,15 @@ namespace app\models;
 use yii\db\ActiveRecord;
 
 class Meals extends ActiveRecord {
+
+	public function behaviors()
+    {
+        return [
+            'image' => [
+                'class' => 'rico\yii2images\behaviors\ImageBehave',
+            ]
+        ];
+    }
 	public static function tableName()
 	{
 		return 'meals';
@@ -29,6 +38,7 @@ class Meals extends ActiveRecord {
         $meal->title = $validPost['title'];
         $meal->category = $validPost['category'];
         $meal->body = $validPost['body'];
+        $meal->image = $validPost['image'];
         $meal->save();
     
     return $meal;
@@ -40,6 +50,7 @@ class Meals extends ActiveRecord {
         $meal->title = $validPost['title'];
         $meal->category = $validPost['category'];
         $meal->body = $validPost['body'];
+        $meal->image = $validPost['image'];
         $meal->save();
     
     return $meal;

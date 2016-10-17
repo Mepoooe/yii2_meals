@@ -1,6 +1,7 @@
 <?php
 
 namespace app\controllers;
+use yii\filters\AccessControl;
 use app\models\Meals;
 use app\models\Search;
 use app\models\OrderList;
@@ -9,6 +10,28 @@ use app\models\FilterMealsForm;
 use Yii;
 
 class MealsController extends AppController {
+
+	public function behaviors()
+    {
+        return [
+       'access' => [
+           'class' => AccessControl::className(),
+           'only' => [ 'add-meals', 'your-menu'],
+           'rules' => [
+               [
+                   'actions' => ["add-meals", "your-menu"],
+                   'allow' => true,
+                   'roles' => ['@'],
+                   'matchCallback' => function ($rule, $action) {
+                       return User::isUser(Yii::$app->user->identity->username);
+                   }
+               ],
+           ],
+       ],
+    ];
+    } 
+
+
 	// добавление и вывод обедов
 	public function actionIndex() {
 		$model = new FilterMealsForm();
@@ -33,7 +56,7 @@ class MealsController extends AppController {
             }
         }
 
-		$query = Meals::find()->select('id, title, category, body, publish_date')->orderBy('id DESC');
+		$query = Meals::find()->select('id, title, category, body, image ,publish_date')->orderBy('id DESC');
 		$pages = new \yii\data\Pagination(['totalCount' => $query->count(), 'pageSize' => 6, 'pageSizeParam' => false, 'forcePageParam' => false]);
 		$posts = $query->offset($pages->offset)->limit($pages->limit)->all();
 
@@ -61,10 +84,36 @@ class MealsController extends AppController {
 	//добавить Meal order_list а от туда потом в личный кабинет
 	public function actionAddMeals ($id = null, $userId = null, $count = null)
 	{
+		if(Yii::$app->request->isAjax) {
+			if (!empty($_GET)) {
+				$valueAddMeal = array();
+				foreach ($_GET as $key => $value) {
+					$valueAddMeal[$key] = $value;
+				}
+				if ($valueAddMeal['idUser'] === 'false') {
+					return 'notUser';
+				}
+				$id = $valueAddMeal['idMeal'];
+				$userId = $valueAddMeal['idUser'];
+
+				$searchMealsById = new Search();
+				$searchMeals = $searchMealsById->findById('OrderList', $id, $userId);
+				if ($searchMeals !== null) {
+					$post = Meals::findOne($id);
+					return 'mealExist';
+				}
+				$orderList = new OrderList();
+				$orderList->addOrder($id, $userId, $count);
+
+				return 'mealAdd';
+			}
+			
+		}
 		$id = $id;
 		$userId = $userId;
 		if($userId === null) {
-			return $this->redirect(array('site/login/'));
+			return 'notUser';
+			//return $this->redirect(array('meals/index/'));
 		}
 
 		$searchMealsById = new Search();

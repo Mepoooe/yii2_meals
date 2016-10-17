@@ -1,14 +1,40 @@
 <?php
 
 namespace app\controllers;
+use yii\filters\AccessControl;
 use app\models\Meals;
 use app\models\User;
 use app\models\AddMealsForm;
 use app\models\AddUsersForm;
 use app\models\OrderList;
+use app\models\FuncsForImages;
+use yii\web\UploadedFile;
+use app\models\AnswerQuestionsForm;
+use app\models\AnswerQuestions;
 use Yii;
 
 class AdminkaController extends AppController {
+
+    // только пользователи 
+    public function behaviors()
+    {
+        return [
+       'access' => [
+           'class' => AccessControl::className(),
+           'only' => [ '*'],
+           'rules' => [
+               [
+                   'controllers' => ["adminka"],
+                   'allow' => true,
+                   'roles' => ['@'],
+                   'matchCallback' => function ($rule, $action) {
+                       return User::isUserAdmin(Yii::$app->user->identity->username);
+                   }
+               ],
+           ],
+       ],
+    ];
+    } 
 
 	public function actionIndex() 
 	{	
@@ -25,11 +51,16 @@ class AdminkaController extends AppController {
             } 
             if ($model->validate()) {
                 // form inputs are valid, do something here
+                $image = $model->image = UploadedFile::getInstance($model, 'image');
+                $images = new FuncsForImages();
+                $images = $images->saveImg($image);
+
                 $valueArray = array();
                 $post = Yii::$app->request->post();
                 foreach ($post['AddMealsForm'] as $key => $value) {
                 	$valueArray[$key] = $value; 
                 }            
+                $valueArray['image'] = $images;
                 Meals::addMeal($valueArray);
                 $meals = Meals::getAllMeals();
                 return $this->render('meals', compact('valueArray', 'meals', 'model'));;
@@ -42,7 +73,13 @@ class AdminkaController extends AppController {
     // удаление обедов
 	public function actionDel ($id = null)
 	{
-		$model = new AddMealsForm();
+        $img = new FuncsForImages();
+		$meal = new Meals();
+        // получаем img
+        $imgForDel = $meal->getMeal($id);
+        $imgForDel = $imgForDel->image;
+        // удаляем само изображение
+        $img = $img->deleteImg($imgForDel);
 		Meals::delMeal($id);
 		$meals = Meals::getAllMeals();
         
@@ -59,12 +96,28 @@ class AdminkaController extends AppController {
                  print_r($model->errors);
             } 
             if ($model->validate()) {
-                // form inputs are valid, do something here
+                // удаляем img
+                $images = new FuncsForImages();
+                $meal = new Meals();
+                // получаем img
+                $imgForDel = $meal->getMeal($id);
+                $imgForDel = $imgForDel->image;
+                // удаляем само изображение
+                $images = $images->deleteImg($imgForDel);
+
+                // получаем и перезаписываем
+                $images = new FuncsForImages();
+                $image = $model->image = UploadedFile::getInstance($model, 'image');
+                // printGreat($image);
+                // die;
+                $images = $images->saveImg($image);
+
                 $valueArray = array();
                 $post = Yii::$app->request->post();
                 foreach ($post['AddMealsForm'] as $key => $value) {
                 	$valueArray[$key] = $value; 
                 }            
+                $valueArray['image'] = $images;
                 Meals::editMeal($id, $valueArray);
                 $meals = Meals::getAllMeals();
                 return $this->redirect(['meals']);;
@@ -143,5 +196,69 @@ class AdminkaController extends AppController {
         
         return $this->redirect(['users']);
 	}
-	
+
+    // вывод вопросов-ответов + добавление новых
+	public function actionAnswerQuestions() {
+        $model = new AnswerQuestionsForm();
+
+        if ($model->load(Yii::$app->request->post())) {
+            if(!$model->validate()){
+                 print_r($model->errors);
+            } 
+            if ($model->validate()) {
+                // form inputs are valid, do something here
+                $valueArray = array();
+                $post = Yii::$app->request->post();
+                foreach ($post['AnswerQuestionsForm'] as $key => $value) {
+                    $valueArray[$key] = $value; 
+                }            
+                AnswerQuestions::addAnswerQuestions($valueArray);
+                $answerQuestions = AnswerQuestions::getAllAnswerQuestions();
+                return $this->render('answerQuestions', compact('valueArray', 'answerQuestions', 'model'));;
+            }
+        }
+        $answerQuestions = AnswerQuestions::getAllAnswerQuestions();
+        return $this->render('answerQuestions', compact('answerQuestions', 'model'));
+    }
+
+    // редактировать информацию вопроса ответа
+    public function actionEditAnswerQuestion ($id = null)
+    {
+        $model = new AnswerQuestionsForm();
+
+        if ($model->load(Yii::$app->request->post())) {
+            if(!$model->validate()){
+                 print_r($model->errors);
+            } 
+            if ($model->validate()) {
+                // form inputs are valid, do something here
+                $valueArray = array();
+                $post = Yii::$app->request->post();
+                foreach ($post['AnswerQuestionsForm'] as $key => $value) {
+                    $valueArray[$key] = $value; 
+                }            
+                AnswerQuestions::editAnswerQuestions($id, $valueArray);
+                return $this->redirect(['answer-questions']);
+            }
+        }
+        $answerQuestion = AnswerQuestions::getAnswerQuestion($id);
+
+    return $this->render('editAnswerQuestion', compact('answerQuestion', 'model'));
+
+    }
+
+    // подробнее о вопросе
+    public function actionAnswerQuestion($id) {
+        $answerQuestion = AnswerQuestions::getAnswerQuestion($id);
+        return $this->render('answerQuestion', compact('answerQuestion'));
+    }
+
+    // удалить вопрос
+    public function actionDelAnswerQuestion($id = null)
+    {
+        $model = new AnswerQuestions();
+        AnswerQuestions::delAnswerQuestions($id);
+        
+        return $this->redirect(['answer-questions']);
+    }
 }

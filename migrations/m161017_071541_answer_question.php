@@ -2,23 +2,22 @@
 
 use yii\db\Migration;
 
-class m161003_103407_meals extends Migration
+class m161017_071541_answer_question extends Migration
 {
     public function up()
     {
-         $this->createTable('meals', [
+         $this->createTable('answer_question', [
             'id' => $this->primaryKey(),
             'title' => $this->string()->notNull(),
             'category' => $this->string(),
             'body' => $this->text(),
-            'image' => $this->string(),
             'publish_date' => $this->timestamp() . ' NOT NULL',
         ]);
     }
 
     public function down()
     {
-        $this->dropTable('meals');
+         $this->dropTable('answer_question');
     }
 
     /*

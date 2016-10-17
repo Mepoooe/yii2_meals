@@ -15,11 +15,20 @@ use yii\db\ActiveRecord;
  */
 class AddMealsForm extends Model
 {
+    
     public $title;
     public $category;
     public $body;
-
-
+    public $image;
+   
+   public function behaviors()
+    {
+        return [
+            'image' => [
+                'class' => 'rico\yii2images\behaviors\ImageBehave',
+            ]
+        ];
+    }
     /**
      * @return array the validation rules.
      */
@@ -29,6 +38,7 @@ class AddMealsForm extends Model
             // username and password are both required
          [['title', 'category'], 'required', 'message' => 'Заполните поля!'],
             'title' => [['title'], 'string', 'max' => 60],
+             [['image'], 'file', 'extensions' => 'png, jpg'],
             'category' => [['category'], 'string', 'max' => 60],
             'body' => [['body'], 'string'],
         ]; 
@@ -40,7 +50,20 @@ class AddMealsForm extends Model
             'title' => 'Название обеда',
             'category' => 'Категория',
             'body' => 'Описание',
+            'image' => 'Загрузить картинку'
         ];
     }
+
+    // public function upload ()
+    // {
+    //     if ($this->validate()) {
+    //         $path = 'upload/store/'.$this->image->basename.'.'.$this->image->extension;
+    //         $this->image->saveAs($path);
+    //         $this->attachImage($path);
+    //         return true;
+    //     } else {
+    //         return false;
+    //     }
+    // }
     
 }

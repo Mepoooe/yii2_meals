@@ -4,12 +4,16 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\captcha\Captcha;
 
+$this->title = 'cite';
+
 /* @var $this yii\web\View */
 /* @var $model app\models\User */
 /* @var $form ActiveForm */
 ?>
 <div class="site-reg">
-
+<?php
+    $this->params['breadcrumbs'][] = ['label' => 'Первый шаг', 'url' => ['/site/reg-step-one']];
+?>
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>Заполните данные для регистрации:</p>
@@ -29,14 +33,14 @@ use yii\captcha\Captcha;
 
         <?= $form->field($model, 'password')->passwordInput() ?>
 
-        <?= $form->field($model, 'phone')->textInput() ?>
+        <?//= $form->field($model, 'phone')->textInput() ?>
 
-        <?= $form->field($model, 'address')->textInput() ?>
+        <?//= $form->field($model, 'address')->textInput() ?>
 
-        <?= $form->field($model, 'reCaptcha')->widget(
+        <!-- <?= $form->field($model, 'reCaptcha')->widget(
             \himiklab\yii2\recaptcha\ReCaptcha::className(),
             ['siteKey' => '6LejABgTAAAAAKj_HiKJUf8lO8g_2Exs6Yh6jk_E']
-        ) ?>
+        ) ?> -->
 
         <input type="hidden" value="<?=Yii::$app->request->getCsrfToken()?>" />
 

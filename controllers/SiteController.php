@@ -9,7 +9,10 @@ use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\User;
-use app\models\RegForm;
+use app\models\RegStepOneForm;
+use app\models\RegStepTwoForm;
+use app\models\RegStepThreeForm;
+use app\models\AnswerQuestions;
 
 class SiteController extends Controller
 {
@@ -63,13 +66,13 @@ class SiteController extends Controller
     }
 
     // action for reg
-    public function actionReg()
+    public function actionRegStepOne()
     {
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
 
-        $model = new RegForm(); 
+        $model = new RegStepOneForm(); 
 
         if ($model->load(Yii::$app->request->post())) {
             if(!$model->validate()){
@@ -78,19 +81,85 @@ class SiteController extends Controller
             if ($model->validate()) {
                 $valueArray = array();
                 $post = Yii::$app->request->post();
-                foreach ($post['RegForm'] as $key => $value) {
+                foreach ($post['RegStepOneForm'] as $key => $value) {
                     $valueArray[$key] = $value; 
-                }            
-                $user = new User();
-                $userCreate = $user->addUser($valueArray);
-                return $this->render('index', compact('userCreate'));;
+                }                           
+                // $user = new User();
+                // $userCreate = $user->addUser($valueArray);
+                //$model = new RegStepTwoForm(); 
+                $session = Yii::$app->session;
+                $session->open();
+                $valueArray = $session->set('stepOneValue', $valueArray);
+                $session->close();
+                //$session->setFlash('valueArray', $valueArray);
+                return $this->redirect(['reg-step-two']);
             }
         }
-        return $this->render('reg', [
+        return $this->render('regStepOne', [
             'model' => $model,
         ]);
     }
 
+    public function actionRegStepTwo()
+    {
+       $model = new RegStepTwoForm(); 
+
+       if ($model->load(Yii::$app->request->post())) {
+            if(!$model->validate()){
+                 print_r($model->errors);
+            }
+
+            if ($model->validate()) {
+                $stepTwoValue = array();
+                $post = Yii::$app->request->post();
+                foreach ($post['RegStepTwoForm'] as $key => $value) {
+                    $stepTwoValue[$key] = $value; 
+                }            
+                // $user = new User();
+                // $userCreate = $user->addUser($valueArray);
+                //$model = new RegStepTwoForm(); 
+                $session = Yii::$app->session;
+
+                $session->open();
+                $session->set('stepTwoValue', $stepTwoValue);
+                $session->close();
+                return $this->redirect(['reg-step-three']);
+            }
+        }
+        return $this->render('regStepTwo', [
+            'model' => $model,
+        ]);
+    }
+
+    public function actionRegStepThree()
+    {
+        $model = new RegStepThreeForm(); 
+
+       if ($model->load(Yii::$app->request->post())) {
+            if(!$model->validate()){
+                 print_r($model->errors);
+            }
+
+            if ($model->validate()) {
+                $session = Yii::$app->session;
+
+                $session->open();
+                $stepOne = $session->get('stepOneValue');
+                $stepTwo = $session->get('stepTwoValue');
+                $session->close();
+                $result = array_merge ($stepOne, $stepTwo);
+                $user = new User();
+                $userCreate = $user->addUser($result);
+                $session->destroy();
+                
+                return $this->redirect(['login']);
+            }
+        }
+        
+        return $this->render('regStepThree', [
+            'model' => $model,
+        ]);
+    }
     /**
      * Login action.
      *
@@ -149,5 +218,12 @@ class SiteController extends Controller
     public function actionAbout()
     {
         return $this->render('about');
+    }
+
+    // Секция Вопросы-ответы
+    public function actionAnswerQuestions ()
+    {
+        $answerQuestions = AnswerQuestions::getAllAnswerQuestions();
+        return $this->render('answerQuestions', compact('answerQuestions'));
     }
 }

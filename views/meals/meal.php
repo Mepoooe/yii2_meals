@@ -7,6 +7,7 @@
 ?>
 
 <div class="col-md-9">
+    <img src="/upload/store/<?= $post->image ?>" width="300" height="200" alt='<?= $post->title?>'>
     <h4><?php echo $post->title; ?> </h4>
     <div class="row">
       <div class="col-md-6">

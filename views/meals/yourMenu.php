@@ -9,7 +9,7 @@
 ?>
 <h1>Привет <?php echo Yii::$app->user->identity->username; ?></h1>
 <h3>Ниже ваши заказы:</h3>
-<?php if (empty($orderList) || $mealsEmpty === true): ?>
+<?php if (empty($orderList) && $mealsEmpty === true): ?>
   <h3 class="text-danger">У вас нет заказов</h3>
 <?php endif ?>
 <?php 

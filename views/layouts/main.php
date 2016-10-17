@@ -36,17 +36,23 @@ AppAsset::register($this);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
-            ['label' => 'Adminka', 'url' => ['/adminka/index']],
+            Yii::$app->user->identity->salt === 20 ? (
+            ['label' => 'Adminka', 'url' => ['/adminka/index']]
+            ) : (
+                '<li>'
+                .'</li>'
+            ),
             ['label' => 'Home', 'url' => ['/site/index']],
             ['label' => 'Каталог блюд', 'url' => ['/meals/index']],
             ['label' => 'About', 'url' => ['/site/about']],
             Yii::$app->user->isGuest ? (
-            ['label' => 'Registration', 'url' => ['/site/reg']]
+            ['label' => 'Registration', 'url' => ['/site/reg-step-one']]
             ) : (
                 '<li>'
                 .'</li>'
             ),
             ['label' => 'Contact', 'url' => ['/site/contact']],
+            ['label' => 'Вопросы и ответы', 'url' => ['/site/answer-questions']],
 
             Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/site/login']]

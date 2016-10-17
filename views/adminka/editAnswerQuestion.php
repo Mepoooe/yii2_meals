@@ -6,20 +6,19 @@ use yii\helpers\Html;
 <h1>hello</h1>
 <?php $form = ActiveForm::begin([
 	        'id' => 'filter-form',
-	        'options' => ['class' => 'form-group', 'enctype' => 'multipart/form-data'],
+	        'options' => ['class' => 'form-group'],
 	    	]); ?>
 
-	        <?= $form->field($model, 'title')->textInput(['autofocus' => true, 'value' => $meal->title]) ?>
+	        <?= $form->field($model, 'title')->textInput(['autofocus' => true, 'value' => $answerQuestion->title]) ?>
 	        <?= $form->field($model, 'category')->dropDownList([
 	        	'Жаркое' => 'Жаркое',
 	        	'Супы' => 'Супы',
 	        	'Десерты' => 'Десерты',
 
 	        ], [
-	        'prompt' => $meal->category
+	        'prompt' => $answerQuestion->category
 	        ]) ?>
-	        <?= $form->field($model, 'image')->fileInput() ?>
-	        <?= $form->field($model, 'body')->textArea(['rows' => '6', 'value' => $meal->body]) ?>
+	        <?= $form->field($model, 'body')->textArea(['rows' => '6', 'value' => $answerQuestion->body]) ?>
 
 	        <input type="hidden" value="<?=Yii::$app->request->getCsrfToken()?>" />
 

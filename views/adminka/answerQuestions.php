@@ -4,30 +4,31 @@ use yii\helpers\Html;
 
 ?>
 
-<h1>hello meals</h1>
+<h1>Hello in the F.A.Q</h1>
 
 	<div class="col-md-10">
-		<a data-toggle="modal" data-target=".bs-example-modal-lg" class="btn btn-primary btn-lg btn-block" >Добавить новый обед</a>
+		<a data-toggle="modal" data-target=".bs-example-modal-lg" class="btn btn-primary btn-lg btn-block" >Добавить новый вопрос</a>
 		<table class="table table-condensed">
+		<th>Вопрос</th>
+		<th>Категория вопроса</th>
 <?php
-foreach ($meals as $meal) {
-	//printGreat($meal->$image);
+foreach ($answerQuestions as $answerQuestion) {
+	//printGreat($answerQuestions);
 ?>
 	    	
 	    	<tr>
-	    		<td colspan="50">
-	        		<img src="/upload/store/<?=$meal->image ?>" width="300" height="200" alt='dsadsa'>
+	    		<td>
+	        		<a href="<? echo yii\helpers\Url::to(['adminka/answer-question', 'id' => $answerQuestion->id]); ?>"> <?=$answerQuestion->title ?></a> 
 	        	
 		        </td>
-	    		<td colspan="50">
-	        		<a href="<? echo yii\helpers\Url::to(['meals/meal', 'id' => $meal->id]); ?>"> <?=$meal->title ?></a> 
+		        <td colspan="50">
+	        		 <?=$answerQuestion->category ?> 
 	        	
 		        </td>
-		      
 		        <td>
-			        	<a class="btn btn-warning" href="<? echo yii\helpers\Url::to(['adminka/edit-meal', 'id' => $meal->id]); ?>"> Редактировать</a> 
+			        	<a class="btn btn-warning" href="<? echo yii\helpers\Url::to(['adminka/edit-answer-question', 'id' => $answerQuestion->id]); ?>"> Редактировать</a> 
 
-			        	<a class="btn btn-danger" href="<? echo yii\helpers\Url::to(['adminka/del', 'id' => $meal->id]); ?>"> Удалить </a> 
+			        	<a class="btn btn-danger" href="<? echo yii\helpers\Url::to(['adminka/del-answer-question', 'id' => $answerQuestion->id]); ?>"> Удалить </a> 
 			        
 		        </td>
 	        </tr>	    
@@ -42,7 +43,7 @@ foreach ($meals as $meal) {
     <div class="formAdminkaAddMeals">
       <?php $form = ActiveForm::begin([
 	        'id' => 'filter-form',
-	        'options' => ['class' => 'form-group', 'enctype' => 'multipart/form-data'],
+	        'options' => ['class' => 'form-group'],
 	    	]); ?>
 
 	        <?= $form->field($model, 'title')->textInput(['autofocus' => true]) ?>
@@ -54,7 +55,6 @@ foreach ($meals as $meal) {
 	        ], [
 	        'prompt' => 'Выберите один или несколько вариантов'
 	        ]) ?>
-	        <?= $form->field($model, 'image')->fileInput() ?>
 	        <?= $form->field($model, 'body')->textArea(['rows' => '6']) ?>
 
 	        <input type="hidden" value="<?=Yii::$app->request->getCsrfToken()?>" />

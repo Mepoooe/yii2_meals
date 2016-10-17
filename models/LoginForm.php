@@ -18,7 +18,6 @@ class LoginForm extends Model
     public $rememberMe = true;
 
     private $_user = false;
-    private $_mail = false;
 
 
     /**
@@ -100,14 +99,5 @@ class LoginForm extends Model
         }
 
         return $this->_user;
-    }
-
-    public function getUserMail()
-    {
-        if ($this->_mail === false) {
-            $this->_mail = User::findByUserMail($this->username);
-        }
-
-        return $this->_mail;
     }
 }

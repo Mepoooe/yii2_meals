@@ -13,13 +13,13 @@ use yii\db\ActiveRecord;
  * @property User|null $user This property is read-only.
  *
  */
-class RegForm extends Model
+class RegStepOneForm extends Model
 {
     public $username;
     public $password;
     public $email;
-    public $phone;
-    public $address;
+    // public $phone;
+    // public $address;
     //public $captcha;
  
     private $_user = true;
@@ -32,13 +32,13 @@ class RegForm extends Model
     {
         return [
             // username and password are both required
-            [['username', 'email', 'password', 'phone', 'address'], 'required'],
+            [['username', 'email', 'password'], 'required'],
              [['username', 'email'], 'filter', 'filter' => 'trim', 'skipOnArray' => true],
              ['email', 'email'],
              'password' => [['password'], 'string', 'min' => 4, 'max' => 60],
              ['username', 'string', 'length' => [4, 24]],
-             ['address', 'string', 'length' => [4, 24]],
-             ['phone', 'number'],
+             // ['address', 'string', 'length' => [4, 24]],
+             // ['phone', 'number'],
               //[[], \himiklab\yii2\recaptcha\ReCaptchaValidator::className()],
 
             // username is validated by validatePassword()
